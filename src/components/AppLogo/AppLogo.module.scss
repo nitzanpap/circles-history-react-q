@@ -1,0 +1,19 @@
+.AppLogo {
+  height: 40px;
+  user-select: none;
+  transition: 0.2s;
+  animation: AppLogo-spin infinite 20s linear;
+  &:hover {
+    height: 80px;
+    animation: AppLogo-spin infinite 4s linear;
+  }
+}
+
+@keyframes AppLogo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
