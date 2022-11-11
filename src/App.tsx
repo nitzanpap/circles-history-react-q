@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.scss';
 import AppLogo from './components/AppLogo/AppLogo';
 
@@ -9,8 +9,14 @@ function App() {
   const [currentIndexInHistory, setCurrentIndexInHistory]: any[] = useState(0);
 
   const addCircleToScreen = (e: React.MouseEvent<HTMLElement>) => {
+    // Only add circles on the 'App' div.
     if (e.target !== e.currentTarget) return;
-    setCurrentIndexInHistory(currentIndexInHistory + 1);
+    // Remove any elements in the array after currentIndexInHistory.
+    circleElsArr.map((el: any) => {
+      console.log(el);
+      return el;
+    });
+    // Create new circle element
     const newCoordinate = { x: e.clientX, y: e.clientY };
     const newCircle = (
       <AppLogo
@@ -18,21 +24,26 @@ function App() {
         key={currentIndexInHistory}
         coordinate={newCoordinate}
       />
-      );
-    setCircleElsArr([...circleElsArr, newCircle]);
+    );
+    // Add new circle element to array
+    setCircleElsArr([...circleElsArr.slice(0, currentIndexInHistory), newCircle]);
     console.log('Added circle ', currentIndexInHistory);
+    setCurrentIndexInHistory(currentIndexInHistory + 1);
   };
 
   const handleBackwards = (e: React.MouseEvent<HTMLElement>) => {
-    // console.log(circleElsArr.slice(-1)[0].key);
-    const lastShownEl = document.querySelector(
-      `#circle-${currentIndexInHistory - 1}`
-    ) as HTMLElement;
-    console.log(currentIndexInHistory);
-    lastShownEl.remove();
     setCurrentIndexInHistory(currentIndexInHistory - 1);
   };
+  const handleForwards = (e: React.MouseEvent<HTMLElement>) => {
+    setCurrentIndexInHistory(currentIndexInHistory + 1);
+  };
 
+  useEffect(() => {
+    currentIndexInHistory === 0 ? setBackwardsDisabled(true) : setBackwardsDisabled(false);
+    currentIndexInHistory === circleElsArr.length
+      ? setForwardDisabled(true)
+      : setForwardDisabled(false);
+  }, [circleElsArr.length, currentIndexInHistory]);
   return (
     <div className="App" onClick={(e) => addCircleToScreen(e)}>
       <section className="history-btn-section">
@@ -43,11 +54,18 @@ function App() {
         >
           Backward
         </button>
-        <button className="history-btn forward-btn" disabled={forwardDisabled}>
+        <button
+          className="history-btn forward-btn"
+          disabled={forwardDisabled}
+          onClick={(e) => handleForwards(e)}
+        >
           Forward
         </button>
       </section>
-      {circleElsArr}
+      {circleElsArr.filter((el: any) => {
+        console.log(el);
+        return el.key < currentIndexInHistory;
+      })}
     </div>
   );
 }
