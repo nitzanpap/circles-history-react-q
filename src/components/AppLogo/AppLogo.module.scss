@@ -1,12 +1,8 @@
 .AppLogo {
-  height: 40px;
+  position: fixed;
   user-select: none;
   transition: 0.2s;
-  animation: AppLogo-spin infinite 20s linear;
-  &:hover {
-    height: 80px;
-    animation: AppLogo-spin infinite 4s linear;
-  }
+  animation: AppLogo-spin infinite 8s linear;
 }
 
 @keyframes AppLogo-spin {
