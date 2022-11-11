@@ -6,9 +6,6 @@
   user-select: none;
   transition: 0.2s;
   animation: AppLogo-spin infinite 8s linear;
-  &.hidden {
-    display: none;
-  }
 }
 
 @keyframes AppLogo-spin {
