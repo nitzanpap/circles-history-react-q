@@ -9,21 +9,28 @@ function App() {
   const [currentIndexInHistory, setCurrentIndexInHistory]: any[] = useState(0);
 
   const addCircleToScreen = (e: React.MouseEvent<HTMLElement>) => {
-    const newCoordinate = { x: e.clientX, y: e.clientY };
+    if (e.target !== e.currentTarget) return;
     setCurrentIndexInHistory(currentIndexInHistory + 1);
-    console.log('Added circle ', currentIndexInHistory);
+    const newCoordinate = { x: e.clientX, y: e.clientY };
     const newCircle = (
       <AppLogo
         id={`circle-${currentIndexInHistory}`}
         key={currentIndexInHistory}
         coordinate={newCoordinate}
       />
-    );
+      );
     setCircleElsArr([...circleElsArr, newCircle]);
+    console.log('Added circle ', currentIndexInHistory);
   };
 
-  const handleBackwards = () => {
-    setCircleElsArr([]);
+  const handleBackwards = (e: React.MouseEvent<HTMLElement>) => {
+    // console.log(circleElsArr.slice(-1)[0].key);
+    const lastShownEl = document.querySelector(
+      `#circle-${currentIndexInHistory - 1}`
+    ) as HTMLElement;
+    console.log(currentIndexInHistory);
+    lastShownEl.remove();
+    setCurrentIndexInHistory(currentIndexInHistory - 1);
   };
 
   return (
@@ -32,7 +39,7 @@ function App() {
         <button
           className="history-btn backward-btn"
           disabled={backwardsDisabled}
-          onClick={handleBackwards}
+          onClick={(e) => handleBackwards(e)}
         >
           Backward
         </button>
