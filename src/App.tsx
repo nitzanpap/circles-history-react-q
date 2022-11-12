@@ -37,11 +37,12 @@ function App() {
   };
 
   useEffect(() => {
-    currentIndexInHistory === 0 ? setBackwardsDisabled(true) : setBackwardsDisabled(false);
+    setBackwardsDisabled(currentIndexInHistory === 0);
     currentIndexInHistory === circleElsArr.length
       ? setForwardDisabled(true)
       : setForwardDisabled(false);
   }, [circleElsArr.length, currentIndexInHistory]);
+
   return (
     <div className="App" onClick={(e) => addCircleToScreen(e)}>
       <section className="history-btn-section">
