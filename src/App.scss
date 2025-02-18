@@ -1,6 +1,9 @@
+@use "sass:color";
+
 .App {
   text-align: center;
   background-color: #282c34;
+  width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,10 +31,10 @@
       cursor: pointer;
       transition: 0.15s;
       &:hover {
-        background-color: darken(#3f3f3f, 4);
+        background-color: color.adjust(#3f3f3f, $lightness: -4%);
       }
       &:active {
-        background-color: darken(#3f3f3f, 8);
+        background-color: color.adjust(#3f3f3f, $lightness: -8%);
       }
       &:disabled {
         color: #888;
